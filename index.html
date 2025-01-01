@@ -5,14 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>¡Feliz Año Nuevo 2025!</title>
     <style>
-        body {
+        * {
             margin: 0;
-            min-height: 100vh;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: fixed;
+        }
+
+        body {
             background: radial-gradient(circle at center, #000428 0%, #004e92 100%);
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
             font-family: Arial, sans-serif;
         }
 
@@ -20,6 +32,7 @@
             text-align: center;
             z-index: 1;
             padding: 20px;
+            width: 90%;
             max-width: 800px;
             background: rgba(0, 0, 0, 0.3);
             border-radius: 20px;
@@ -51,6 +64,16 @@
             background: rgba(255, 255, 255, 0.1);
             padding: 15px;
             border-radius: 10px;
+        }
+
+        .effects-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
         }
 
         .firework {
@@ -130,12 +153,18 @@
             }
             .message {
                 font-size: 1em;
-                padding: 0 15px;
+                padding: 10px;
+                margin: 15px 0;
+            }
+            .container {
+                padding: 15px;
+                width: 95%;
             }
         }
     </style>
 </head>
 <body>
+    <div class="effects-container"></div>
     <div class="container">
         <h1>¡Feliz Año Nuevo 2025!</h1>
         <p>Que este nuevo año te traiga</p>
@@ -155,6 +184,8 @@
     </div>
 
     <script>
+        const effectsContainer = document.querySelector('.effects-container');
+
         function createFirework() {
             const firework = document.createElement('div');
             firework.className = 'firework';
@@ -163,7 +194,6 @@
             firework.style.left = x + 'px';
             firework.style.top = y + 'px';
             
-            // Colores más brillantes
             const colors = [
                 '#ff00ff', '#00ffff', '#ffff00', '#ff0000', '#00ff00',
                 '#ff1493', '#00fa9a', '#ffd700', '#ff69b4', '#1e90ff'
@@ -171,9 +201,8 @@
             const color = colors[Math.floor(Math.random() * colors.length)];
             firework.style.backgroundColor = color;
             firework.style.boxShadow = `0 0 20px ${color}`;
-            document.body.appendChild(firework);
+            effectsContainer.appendChild(firework);
             
-            // Más partículas para cada explosión
             for (let i = 0; i < 30; i++) {
                 createParticle(x, y, color);
             }
@@ -199,7 +228,7 @@
             particle.style.setProperty('--dx', dx + 'px');
             particle.style.setProperty('--dy', dy + 'px');
             
-            document.body.appendChild(particle);
+            effectsContainer.appendChild(particle);
             
             setTimeout(() => {
                 particle.remove();
@@ -211,7 +240,6 @@
             sparkle.className = 'sparkle';
             sparkle.style.left = Math.random() * 100 + 'vw';
             
-            // Colores más brillantes para las chispas
             const colors = [
                 '#ff69b4', '#4169e1', '#32cd32', '#ffd700', '#ff1493',
                 '#00ffff', '#ff4500', '#9400d3', '#00ff00', '#ff6347'
@@ -220,14 +248,13 @@
             sparkle.style.backgroundColor = color;
             sparkle.style.color = color;
             sparkle.style.setProperty('--rotation', `${Math.random() * 360}deg`);
-            document.body.appendChild(sparkle);
+            effectsContainer.appendChild(sparkle);
             
             setTimeout(() => {
                 sparkle.remove();
             }, 2000);
         }
 
-        // Aumentar la frecuencia de los efectos
         setInterval(createFirework, 600);
         setInterval(createSparkle, 50);
     </script>
